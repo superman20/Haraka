@@ -298,6 +298,10 @@ logger.log_if_level = (level, key, plugin) => function () {
             logobj.message += (util.inspect(data));
         }
     }
+    if (logobj.uuid === '-' &&
+        Object.prototype.hasOwnProperty.call(this, "transaction") && this.transaction) {
+        logobj.uuid = this.transaction.uuid;
+    }
     switch (logger.format) {
         case logger.formats.LOGFMT:
             logger.log(
