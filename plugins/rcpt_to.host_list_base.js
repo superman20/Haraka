@@ -44,7 +44,7 @@ exports.hook_mail = function (next, connection, params) {
 
     const anti_spoof = plugin.config.get('host_list.anti_spoof') || false;
 
-    if (plugin.in_host_list(domain) || plugin.in_host_regex(domain)) {
+    if (plugin.in_host_list(domain, txn) || plugin.in_host_regex(domain, txn)) {
         if (anti_spoof && !connection.relaying) {
             txn.results.add(plugin, {fail: 'mail_from.anti_spoof'});
             return next(DENY, `Mail from domain '${domain}' is not allowed from your host`);
@@ -58,21 +58,21 @@ exports.hook_mail = function (next, connection, params) {
     return next();
 }
 
-exports.in_host_list = function (domain) {
+exports.in_host_list = function (domain, txn) {
     const plugin = this;
-    plugin.logdebug(`checking ${domain} in config/host_list`);
+    plugin.logdebug(`checking ${domain} in config/host_list`, txn);
     if (plugin.host_list[domain]) {
         return true;
     }
     return false;
 }
 
-exports.in_host_regex = function (domain) {
+exports.in_host_regex = function (domain, txn) {
     const plugin = this;
     if (!plugin.host_list_regex) return false;
     if (!plugin.host_list_regex.length) return false;
 
-    plugin.logdebug(`checking ${domain} against config/host_list_regex `);
+    plugin.logdebug(`checking ${domain} against config/host_list_regex`, txn);
 
     if (plugin.hl_re.test(domain)) { return true; }
     return false;
