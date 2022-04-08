@@ -40,7 +40,7 @@ exports.hook_mail = function (next, connection, params) {
     connection.loginfo(plugin, `forwarding to ${
         c.forwarding_host_pool ? "configured forwarding_host_pool" : `${c.host}:${c.port}`}`
     );
-    smtp_client_mod.get_client_plugin(plugin, connection, c, (err, smtp_client) => {
+    smtp_client_mod.get_client_plugin(plugin, connection, c, (smtp_client) => {
         connection.notes.smtp_client = smtp_client;
         smtp_client.next = next;
 
@@ -95,8 +95,11 @@ exports.hook_data = (next, connection) => {
 
 exports.hook_queue = function (next, connection) {
     const plugin = this;
+    if (!connection?.transaction || !connection?.notes) return next();
+
     const smtp_client = connection.notes.smtp_client;
     if (!smtp_client) return next();
+
     smtp_client.next = next;
     if (smtp_client.is_dead_sender(plugin, connection)) {
         delete connection.notes.smtp_client;
