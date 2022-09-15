@@ -3,6 +3,8 @@
 
 ### Changes
 
+- uribl: timeout DNS 1 second before plugin, #3077
+- uribl: load .ini config to plugin.cfg, add basic tests #3077
 - ./mailbody & ./mailheader moved to haraka-email-message #3071
 - dkim_sign: reformat dkim signature to multi-line #2991
 - dkim_sign: remove spurious error logging #3034
@@ -29,6 +31,7 @@
 - chore: add lots of `if (!transaction) return` in places #2732
 - chore(test): build shims for windows-2022 & node on windows #3052
 - chore(test): restore CI tests to working order #3030
+- tls: add force_tls option to the ToDo object
 
 
 ## 2.8.28 - 2021-10-14
