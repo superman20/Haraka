@@ -121,10 +121,10 @@ exports.check_user = function (next, connection, credentials, method) {
             });
             return;
         }
-        
+
         // if here then we failed auth, log the username and password
         connection.logdebug(plugin, `Authentication Failure: UN=${credentials[0]}  PWD=${credentials[1]}`);
-        
+
         if (!connection.notes.auth_fails) connection.notes.auth_fails = 0;
 
         connection.notes.auth_fails++;
