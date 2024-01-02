@@ -103,7 +103,7 @@ class HMailItem extends events.EventEmitter {
 
             this._stream_bytes_from(this.path, {start: 4, end: todo_len + 3}, (err2, todo_bytes) => {
                 if (todo_bytes.length !== todo_len) {
-                    const wrongLength = `Didn't find right amount of data in todo!: ${err2}`;
+                    const wrongLength = `Didn't find right amount of data in todo!: ${err2} ${this.path}`;
                     this.logcrit(wrongLength);
                     fs.rename(this.path, path.join(queue_dir, `error.${this.filename}`), (err3) => {
                         if (err3) {
@@ -1062,7 +1062,7 @@ class HMailItem extends events.EventEmitter {
             "\r": '#10',
             "\n": '#13'
         };
-        const escape_pattern = new RegExp(`[${Object.keys(escaped_chars).join()}]`, 'g');
+        const escape_pattern = new RegExp(`[${Object.keys(escaped_chars).join('')}]`, 'g');
 
         bounce_msg_html_.forEach(line => {
             line = line.replace(/\{(\w+)\}/g, (i, word) => {
