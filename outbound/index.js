@@ -62,7 +62,7 @@ process.on('message', msg => {
 exports.send_email = function () {
 
     if (arguments.length === 2) {
-        logger.logdebug("[outbound] Sending email as a transaction");
+        logger.loginfo({name: "outbound"}, "Sending email as a transaction", arguments[0]);
         return this.send_trans_email(arguments[0], arguments[1]);
     }
 
@@ -223,11 +223,11 @@ exports.send_trans_email = function (transaction, next) {
 
     // add potentially missing headers
     if (!transaction.header.get_all('Message-Id').length) {
-        logger.loginfo("[outbound] Adding missing Message-Id header");
+        logger.loginfo({name: "outbound"}, "Adding missing Message-Id header", transaction);
         transaction.add_header('Message-Id', `<${transaction.uuid}@${net_utils.get_primary_host_name()}>`);
     }
     if (!transaction.header.get_all('Date').length) {
-        logger.loginfo("[outbound] Adding missing Date header");
+        logger.loginfo({name: "outbound"}, "Adding missing Date header", transaction);
         transaction.add_header('Date', utils.date_to_str(new Date()));
     }
 
@@ -239,7 +239,7 @@ exports.send_trans_email = function (transaction, next) {
 
     logger.add_log_methods(connection);
     if (!transaction.results) {
-        logger.logdebug('adding results store');
+        logger.logdebug('adding results store', transaction);
         transaction.results = new ResultStore(connection);
     }
 
@@ -281,7 +281,7 @@ exports.send_trans_email = function (transaction, next) {
 }
 
 exports.process_delivery = function (ok_paths, todo, hmails, cb) {
-    logger.loginfo(`[outbound] Transaction delivery for domain: ${todo.domain}`);
+    logger.loginfo({name: "outbound"}, `Processing delivery for domain: ${todo.domain}`, todo);
     const fname = _qfile.name();
     const tmp_path = path.join(queue_dir, `${_qfile.platformDOT}${fname}`);
     const ws = new FsyncWriteStream(tmp_path, { flags: constants.WRITE_EXCL });
@@ -290,7 +290,7 @@ exports.process_delivery = function (ok_paths, todo, hmails, cb) {
         const dest_path = path.join(queue_dir, fname);
         fs.rename(tmp_path, dest_path, err => {
             if (err) {
-                logger.logerror(`[outbound] Unable to rename tmp file!: ${err}`);
+                logger.logerror({name: "outbound"}, `Unable to rename tmp file!: ${err}`);
                 fs.unlink(tmp_path, () => {});
                 cb("Queue error");
             }
@@ -303,7 +303,7 @@ exports.process_delivery = function (ok_paths, todo, hmails, cb) {
     })
 
     ws.on('error', err => {
-        logger.logerror(`[outbound] Unable to write queue file (${fname}): ${err}`);
+        logger.logerror({name: "outbound"}, `Unable to write queue file (${fname}): ${err}`);
         ws.destroy();
         fs.unlink(tmp_path, () => {});
         cb("Queueing failed");
