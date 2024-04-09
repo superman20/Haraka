@@ -1,16 +1,31 @@
 
 ### Unreleased
 
+#### Changed
+
+- test: add a connection.response test case with DSN #3305
+- deps: bump all versions to latest #3303
+- auth_base: enable disabling constrain_sender at runtime #3298
+- connection: support IPv6 when setting remote.is_private #3295
+- outbound/mx_lookup: make it async/await
+- outbound: emit log message when ignoring local MX
+
 #### Fixed
 
+- fix(bin/haraka): get hook list from doc/Plugins #3306
+- fix(outbound): call cb even if no MX is found
+- fix(helo.checks): declare reject.literal_mismatch as boolean
 - fix(outbound): allow LHLO over insecure socket if TLS is forced #3278
+- fix(outbound): include return path param SMTPUTF8 when required #3289
+- fix(outbound): replace empty Message-ID header
+- fix(outbound): don't send SNI servername when connecting to an IP
+- fix(outbound): chown queue dir after creation #3291
 
 ### [3.0.3] - 2024-02-07
 
 #### Added
 
 - feat(auth_vpopmaild): when outbound, assure the envelope domain matches AUTH domain #3265
-- docs(outbound): remove example setting outbound_ip #3253
 - doc(Plugins.md): add pi-queue-kafka #3247
 - feat(rabbitmq_amqplib): configurable optional queue arguments #3239
 - feat(clamd): add x-haraka-virus header #3207
