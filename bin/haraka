@@ -3,17 +3,17 @@
 // this script takes inspiration from:
 // https://github.com/tnantoka/LooseLeaf/blob/master/bin/looseleaf
 
-const child = require('child_process');
-const fs   = require('fs');
-const net  = require('net');
-const nopt = require('nopt');
-const path = require('path');
-const os   = require('os');
+const child = require('node:child_process');
+const fs   = require('node:fs');
+const net  = require('node:net');
+const path = require('node:path');
+const os   = require('node:os');
 
+const nopt = require('nopt');
 const utils   = require('haraka-utils');
 const sprintf = require('sprintf-js').sprintf;
 const base = path.join(__dirname, '..');
-const ver  = JSON.parse(fs.readFileSync(`${base}/package.json`, 'utf8')).version;
+const ver  = utils.getVersion(base)
 const knownOpts = {
     "version":     Boolean,
     "verbose":     Boolean,
@@ -83,30 +83,37 @@ Options:
     --set-relay   \t\tSet connection.relaying
 `;
 
+function listPlugins (b, dir = 'plugins/') {
 
-function listPlugins (b, dir) {
+    const inital_dir = path.join((b ?? base), dir);
+    const plugin_dirs = [ inital_dir ]
 
-    if (!dir) dir = "plugins/";
-
-    let plist = `${dir}\n`;
-    const subdirs = [];
-    const gl = path.join((b ? b : base), dir);
-
-    for (const p of fs.readdirSync(gl)) {
-        const stat = fs.statSync(`${gl}/${p}`);
-        if (stat.isFile() && ~p.search('.js')) {
-            plist += `\t${p.replace('.js', '')}\n`;
-        }
-        else if (stat.isDirectory()) {
-            subdirs.push(`${dir + p}/`);
+    for (const d of fs.readdirSync(inital_dir)) {
+        if (fs.statSync(path.join(inital_dir, d)).isDirectory()) {
+            plugin_dirs.push(path.join(inital_dir, d));
         }
     }
 
-    for (const s of subdirs) {
-        plist += `\n${listPlugins(b, s)}`;
+    let plugin_list = ``
+    for (const pd of plugin_dirs) {
+        plugin_list += `\n${pd.match(/plugins.*$/)[0]}\n`;
+
+        for (const d of fs.readdirSync(pd)) {
+            if (fs.statSync(path.join(pd, d)).isFile() && ~d.search('.js')) {
+                plugin_list += `\t${d.replace('.js', '')}\n`;
+            }
+        }
     }
 
-    return plist;
+    plugin_list += `\nNPM packages (${b ?? base})\n`
+    const npm_plugins = []
+    for (const entry of fs.readdirSync(path.join(b ?? base, 'node_modules'))) {
+        if (!/^haraka-plugin-/.test(entry)) continue
+        npm_plugins.push(entry.split('-').slice(2).join('-'))
+    }
+    plugin_list += `\t${npm_plugins.join('\n\t')}\n`
+
+    return plugin_list;
 }
 
 // Warning messsage
@@ -139,7 +146,6 @@ function setupBaseConfig (confPath) {
     utils.copyFile(path.join(base, 'config', 'smtp.ini'), path.join(confPath, 'smtp.ini'));
     utils.copyFile(path.join(base, 'config', 'log.ini'),  path.join(confPath, 'log.ini'));
     utils.copyFile(path.join(base, 'config', 'plugins'),  path.join(confPath, 'plugins'));
-    utils.copyDir(path.join(base, 'config', 'dkim'), path.join(confPath, 'dkim'));
 }
 
 function setupRequire () {
@@ -390,7 +396,7 @@ else if (parsed.test) {
             msg = fs.readFileSync(parsed.message);
         }
         catch (e) {
-            logger.logcrit(e.message);
+            logger.crit(e.message);
             logger.dump_logs(1);
         }
     }
@@ -409,7 +415,7 @@ else if (parsed.test) {
             port: 1234,
         },
         destroy () {},
-        on (event, done) {},
+        on (event) {},
         end () {
             process.exit();
         },

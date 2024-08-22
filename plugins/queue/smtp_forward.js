@@ -4,7 +4,7 @@
 // and passes back any errors seen on the ongoing server to the
 // originating server.
 
-const url = require('url');
+const url = require('node:url');
 
 const smtp_client_mod = require('./smtp_client');
 
@@ -230,6 +230,7 @@ exports.forward_enabled = function (conn, dom_cfg) {
 
 exports.queue_forward = function (next, connection) {
     const plugin = this;
+    if (connection.remote.closed) return
     const txn = connection?.transaction;
 
     const cfg = plugin.get_config(connection);
