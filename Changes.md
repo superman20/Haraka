@@ -1,4 +1,38 @@
+# Changelog
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/).
+
 ### Unreleased
+
+- fix(bin/haraka): fix for finding path to config/docs/Plugins.md
+
+### [3.0.5] - 2024-09-27
+
+#### Fixed
+
+- fix(q/lmtp): revert a refactoring error #3407
+- fix: install Plugins.md when haraka -i #3406
+- fix(haraka -h): add missing return for plugin list #3405
+- fix `no_tls_hosts` related docs & tests #3404
+- fix: install docs/Plugins.md when haraka -i installed
+- fix(changes): spelling correction #3397
+
+#### Changed
+
+- lint: remove deprecated semi-style rule
+- removed dependency on ldap plugins #3399
+- doc(tls.md): add note for no_tls_hosts for outbound
+- test(tls): add tests for no_tls_hosts for inbound & outbound
+- dep version bumps:
+  - haraka-email-message: 1.2.4, #3408
+  - nodemailer: 6.9.15
+  - nopt: 8.0.0
+  - tld: 1.2.2
+  - plugin-dkim: 1.0.7
+  - plugin-dns-list: 1.2.1
+  - plugin-elastisearch: 8.0.3
+  - test-fixtures: 1.3.8
+
 
 ### [3.0.4] - 2024-08-21
 
@@ -46,7 +80,7 @@
   - client_pool.get_client & release_client: arity of 5 -> 2
   - mx_lookup: make it async/await
   - mx_lookup: deleted. Logic moved into net_utils #3322
-  - use net_utils.HarkaMx for get_mx parsing #3344
+  - use net_utils.HarakaMx for get_mx parsing #3344
   - emit log message when ignoring local MX #3285
   - pass in config when initiating txn #3315
   - minor es6 updates #3315, #3322
@@ -1552,3 +1586,4 @@
 [3.0.2]: https://github.com/haraka/Haraka/releases/tag/v3.0.2
 [3.0.3]: https://github.com/haraka/Haraka/releases/tag/v3.0.3
 [3.0.4]: https://github.com/haraka/Haraka/releases/tag/3.0.4
+[3.0.5]: https://github.com/haraka/Haraka/releases/tag/v3.0.5
