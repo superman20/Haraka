@@ -92,7 +92,7 @@ A comprehensive list of known plugins. Create a PR to add yours to these lists.
 | [known-senders][url-known-senders]         | Reward emails from those you send mail to                                                   |
 | [LDAP][url-ldap]                           | Aliases, Auth, and Recipient validation from LDAP                                           |
 | [Limit][url-limit]                         | Apply many types of limits to SMTP connections                                              |
-| [log.elasticsearch][url-elastic]           | Store message metadata in Elasticsearch                                                     |
+| [elasticsearch][url-elastic]               | Store message metadata in Elasticsearch                                                     |
 | [log reader][url-logreader]                | extract log entries from the haraka log file                                                |
 | [syslog][url-syslog]                       | Log to syslog                                                                               |
 | [mail_from.is_resolvable][url-mfres]       | Verifies the MAIL FROM domain resolves to a MX                                              |
@@ -167,7 +167,7 @@ A comprehensive list of known plugins. Create a PR to add yours to these lists.
 [url-limit]: https://github.com/haraka/haraka-plugin-limit
 [url-logreader]: https://github.com/haraka/haraka-plugin-log-reader
 [url-milter]: https://github.com/haraka/haraka-plugin-milter
-[url-mfres]: https://github.com/haraka/Haraka/blob/master/docs/plugins/mail_from.is_resolvable.md
+[url-mfres]: https://github.com/haraka/haraka-plugin-mail_from.is_resolvable
 [url-msgsniff]: https://github.com/haraka/haraka-plugin-messagesniffer
 [url-ms]: http://www.armresearch.com/Products/
 [url-creds]: https://github.com/haraka/Haraka/blob/master/docs/plugins/prevent_credential_leaks.md
@@ -189,7 +189,7 @@ A comprehensive list of known plugins. Create a PR to add yours to these lists.
 [url-rqmd]: https://github.com/haraka/haraka-plugin-qmail-deliverable
 [url-rroutes]: https://github.com/haraka/haraka-plugin-recipient-routes
 [url-recordenv]: https://github.com/haraka/Haraka/blob/master/docs/plugins/record_envelope_addresses.md
-[url-relay]: https://github.com/haraka/Haraka/blob/master/docs/plugins/relay.md
+[url-relay]: https://github.com/haraka/haraka-plugin-relay
 [url-rng]: https://github.com/haraka/Haraka/blob/master/docs/plugins/reseed_rng.md
 [url-rspamd]: https://github.com/haraka/haraka-plugin-rspamd
 [url-spamass]: https://github.com/haraka/haraka-plugin-spamassassin
