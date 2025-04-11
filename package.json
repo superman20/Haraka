@@ -60,7 +60,6 @@
     "haraka-plugin-esets": "^1.0.1",
     "haraka-plugin-fcrdns": "^1.1.1",
     "haraka-plugin-geoip": "^1.1.1",
-    "haraka-plugin-graph": "^1.0.5",
     "haraka-plugin-greylist": "^1.0.1",
     "haraka-plugin-headers": "^1.0.6",
     "haraka-plugin-helo.checks": "^1.0.3",
