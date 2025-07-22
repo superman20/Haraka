@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Unreleased
 
+- change: finish renaming dot_stuffing to dot_stuffed
+- deps: bump message-stream to 1.3.0, add some missing ^ chars
+- feat(rabbitmq_amqplib): configurable optional exchange arguments #3472
+- feat(rabbitmq_amqplib): configurable message priority #3472
+
 ### [3.1.1] - 2025-05-19
 
 - Fix: install connection.ini with base configuration on install #3458
