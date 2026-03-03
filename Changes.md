@@ -4,10 +4,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Unreleased
 
-- change: finish renaming dot_stuffing to dot_stuffed
+### [3.1.3] - 2026-02-06
+
+- deps(graph): removed, sqlite3 library is unmaintained
+- deps: bump all to latest
+- outbound: fix aggregate error path #3519
+- doc: fix no plugin names displayed with haraka --order #3517
+- haraka: fixed getHooks regex to grab only hook names
+- config: spool_dir and spool_after belong in connection.ini
+
+### [3.1.2] - 2026-01-02
+
+- smtp_forward: [domain selector] : user + domain #3501
+- rspamd: revert to older plugin version #3493
+- feat: push to a 'release' branch with package-lock.json #3474
+- change: finish renaming dot_stuffing to dot_stuffed #3473
+- deps: require node 20+
+- deps: bump all deps to latest
 - deps: bump message-stream to 1.3.0, add some missing ^ chars
+- dep(tmp): deleted, only used in attachment plugin
+- feat(outbound): configurable outbound IPv4/IPv6 preference using `inet_prefer`
+- feat(outbound): deferred hook is now passed the failed recips and mx #3505
 - feat(rabbitmq_amqplib): configurable optional exchange arguments #3472
 - feat(rabbitmq_amqplib): configurable message priority #3472
+- fix: auth_proxy TLS upgrade works again #3514
+- doc(Plugins): add save-sent #3497
+- doc(README): update DKIM plugin link, #3490
+- style: run prettier in repo #3504
 
 ### [3.1.1] - 2025-05-19
 
@@ -22,23 +45,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 `connection.ini` replaces the following config files:
 
-| old file | connection.ini setting |
-| ------ | ------ |
-| haproxy_hosts | [haproxy] hosts |
-| smtpgreeting | [message] greeting |
-| ehlo_hello_message | [message] helo |
-| connection_close_message | [message] close |
-| banner_includes_uuid | [uuid] banner_chars |
-| deny_includes_uuid | [uuid] deny_chars |
-| databytes | [max] bytes |
-| max_mime_parts | [max] mime_parts |
-| max_line_length | [max] line_length |
-| max_data_line_length | [max] data_line_length |
+| old file                 | connection.ini setting |
+| ------------------------ | ---------------------- |
+| haproxy_hosts            | [haproxy] hosts        |
+| smtpgreeting             | [message] greeting     |
+| ehlo_hello_message       | [message] helo         |
+| connection_close_message | [message] close        |
+| banner_includes_uuid     | [uuid] banner_chars    |
+| deny_includes_uuid       | [uuid] deny_chars      |
+| databytes                | [max] bytes            |
+| max_mime_parts           | [max] mime_parts       |
+| max_line_length          | [max] line_length      |
+| max_data_line_length     | [max] data_line_length |
 
-AND 
+AND
 
 - moves the following settings from smtp.ini to connection.ini:
-  - headers.*
+  - headers.\*
   - main.smtp_utf8
   - main.strict_rfc1869
 - early_talker.pause, removed support, use earlytalker.ini
@@ -94,7 +117,6 @@ config files.
   - plugin-elastisearch: 8.0.3
   - test-fixtures: 1.3.8
 
-
 ### [3.0.4] - 2024-08-21
 
 #### Added
@@ -105,7 +127,7 @@ config files.
 #### Changed
 
 - prefix node libs with 'node:' #3359
-- .gitignore: add config/me and config/*.pem
+- .gitignore: add config/me and config/\*.pem
 - auth_base: enable disabling constrain_sender at runtime #3298
 - auth_base: skip constrain_sender when auth user has no domain #3319
 - avg: repackaged as NPM module #3347
@@ -113,7 +135,7 @@ config files.
 - clamd: repackaged plugin as NPM module
 - config/plugins: consistent formatting #3359
 - connection: check remote is connected before queue #3338
-  - improve log message for queue* hooks, fixes #2998
+  - improve log message for queue\* hooks, fixes #2998
   - support IPv6 when setting remote.is_private #3295
   - in setTLS, replace forEach with for...of
   - NOTE: remove a handful of 3.0 sunset property names #3315
@@ -164,7 +186,7 @@ config files.
 - doc(Outbound.md): improve GHFM formatting
 - remove last vestiges of header_hide_version (long ago renamed)
 - server.js: use the local logger methods
-  - es6(async): _graceful, get_smtp_server, setup_smtp_listeners
+  - es6(async): \_graceful, get_smtp_server, setup_smtp_listeners
   - replace async.eachLimit with Promise.all batches
 - status: replace async.map with Promise.allSettled
 - get Haraka version from utils.getVersion (which includes git id if running from repo)
@@ -297,7 +319,7 @@ config files.
 - dep(haraka-plugin-redis)!: 1.0 -> 2.0 #3038
 - dep(redis)!: 3.1 -> 4.1 #3058
 - dep(generic-pool): remove pooling from outbound #3115
-- smtp_client: remove smtp_\* pooling support in #3113
+- smtp_client: remove smtp\_\* pooling support in #3113
 - dep: bump plugin versions #3063
 - dep: bump haraka-plugin-asn from 1.0.9 to 2.0.0 #3062
 - dep(redis): 3.1 -> 4.1 #3058
@@ -486,7 +508,7 @@ config files.
 - smtp_client: pass pool_timeout to new SMTPClient #2574
 - server: default to nodes=1 (was undefined) #2573
 - test/server: use IPv4 127.0.0.1 instead of localhost #2584
-- queue/smtp_*: add v3 upgrade notice and config setting #2585
+- queue/smtp\_\*: add v3 upgrade notice and config setting #2585
 - spf: use the skip config for helo/ehlo checks #2587
 - spf: avoid 2nd EHLO evaluation if EHLO host is identical #2592
 - queue.js refactoring #2593
@@ -579,7 +601,7 @@ config files.
 
 #### Fixes
 
-- data_headers: check defined-ness of hdr_address _after_ try/catch #2458
+- data_headers: check defined-ness of hdr_address *after* try/catch #2458
 - tls: remove tls.ini loading from plugins/tls #2459
 - tls: remove invalid opt from load_tls_ini #2456
 - outbound: escape values in HTML bounce correctly #2446
@@ -775,18 +797,18 @@ config files.
 
 #### Changes
 
-  - additional tests get var -> const/let medicine #2122
-  - move connection states into haraka-constants #2121
-  - lint: remove useless escapes #2117
-  - lint: switch no-var to error #2109
-  - rspamd: repackaged as NPM module #2106
-  - dsn: repackaged as NPM module haraka-dsn #2105
-  - outbound: add results when queueing #2103
-  - spamassassin: skip adding headers when value is empty #2102
-  - Replace console.log with stdout #2100
-  - update js-yaml to version 3.10.0 #2097
-  - repackage p0f plugin to NPM #2076
-  - ES6: replace var with const or let #2073
+- additional tests get var -> const/let medicine #2122
+- move connection states into haraka-constants #2121
+- lint: remove useless escapes #2117
+- lint: switch no-var to error #2109
+- rspamd: repackaged as NPM module #2106
+- dsn: repackaged as NPM module haraka-dsn #2105
+- outbound: add results when queueing #2103
+- spamassassin: skip adding headers when value is empty #2102
+- Replace console.log with stdout #2100
+- update js-yaml to version 3.10.0 #2097
+- repackage p0f plugin to NPM #2076
+- ES6: replace var with const or let #2073
 
 #### New Features
 
@@ -1015,7 +1037,7 @@ config files.
 - bring port 465 SMTPS TLS config support on par with STARTTLS #1667
 - use tls.connect instead of createSecurePair #1678
 - redis: improve error handling in tests #
-- replace / path seperators with path.* for cross platform compat #1713
+- replace / path seperators with path.\* for cross platform compat #1713
 
 #### Fixes
 
@@ -1199,7 +1221,7 @@ config files.
 #### New Features
 
 - Added bin/haraka --qunstick <domain> to flush all mails
-    for that domain (#1460)
+  for that domain (#1460)
 
 #### Improvements
 
@@ -1221,8 +1243,8 @@ config files.
 - remove spameatingmonkey from tests (#1421)
 - replace ./constants.js with haraka-constants (#1353)
 - Document HMail and TODO items (#1343)
-- Copy only a minimal config/* by default (#1341).
-- cfreader/* removed to haraka/haraka-config (#1350)
+- Copy only a minimal config/\* by default (#1341).
+- cfreader/\* removed to haraka/haraka-config (#1350)
 - outbound and smtp_client honor tls.ini settings (#1350)
 - outbound TLS defaults to enabled
 - lint: remove all unused variables (#1358)
@@ -1244,7 +1266,7 @@ config files.
 - removed TLD stuff to haraka/haraka-tld (#1301)
 - removed unused 'require('redis') in plugins/karma (#1348)
 - improved MIME header support per rfc2231 (#1344)
-- tls options can be defined for outbound and smtp_* (#1357)
+- tls options can be defined for outbound and smtp\_\* (#1357)
 - explicitly disable SSLv2 (#1395)
 - cache STUN results
 - xclient plugin improvements (#1405)
@@ -1431,7 +1453,7 @@ config files.
 - dkim_verify: fixed timeout issue
 - smtp\_[proxy|forward]: correct authentication example
 - Fork child workers after init_master hook
-- connection: return 450/550 for plugin DENY* (was 452/552)
+- connection: return 450/550 for plugin DENY\* (was 452/552)
 - spamassassin: don't call next() when transaction gone
 - outbound: fix crash when sending bounce mail
 - auth_base: fix bad protocol in auth_base.js #1121 (@Dexus)
@@ -1564,13 +1586,13 @@ config files.
 - karma: added whitelist award, pass through temp (DENYSOFT) errors, made
   tarpit variable, configurable reject hooks, doc rewrite, ASN awards, fix penalty days calculation, new DSL for karma awards,
 - bannering fixes
-- added log* stubs to test/fixtures/[plugin|connection]
+- added log\* stubs to test/fixtures/[plugin|connection]
 - tests/fixtures/stub_plugin: set name property
 - config: corrected handling of config.arg gets, fix caching bug, fix boolean
   handling, added missing 'type' handling.
 - Adding the option of using CIDR ranges in the haproxy_hosts file
 - tarpit: added config option hooks_to_delay, added docs
-- contrib/haraka.bsd.rc: startup file for *BSD
+- contrib/haraka.bsd.rc: startup file for \*BSD
 - Store attachment headers on stream
 - Record accepted domains at hook_rcpt and improve queue/lmtp
 - return after next() in the whitelist checks
@@ -1615,7 +1637,7 @@ config files.
 - Fix underscores in documentation so web version doesn't look so weird
 - By default prevent SMTP AUTH unless on a private IP or using TLS WARNING: May break some uses of Haraka, but is worth it for security
 - In lookup_rdns.strict, check whitelist before looking up IP
-- Big rewrite of the SpamAssassin plugin for simplicity and mainly to pass through X-Spam-* headers provided
+- Big rewrite of the SpamAssassin plugin for simplicity and mainly to pass through X-Spam-\* headers provided
 - Added delay_deny plugin allowing more flexibility on when to reject mail
 - Improvements to ini file parsing allowing floats and negative integers, and specifying boolean keys
 - Fix issue causing a CRIT/crash with lost transaction/connection while sending inbound to ongoing SMTP server
@@ -1638,7 +1660,6 @@ config files.
 - Throw exception with set_banner as it is now non-functional. Will be returned in a future version.
 - Small fixes to data.uribl
 
-
 [3.0.0]: https://github.com/haraka/Haraka/releases/tag/3.0.0
 [3.0.1]: https://github.com/haraka/Haraka/releases/tag/v3.0.1
 [3.0.2]: https://github.com/haraka/Haraka/releases/tag/v3.0.2
@@ -1646,7 +1667,6 @@ config files.
 [3.0.4]: https://github.com/haraka/Haraka/releases/tag/3.0.4
 [3.0.5]: https://github.com/haraka/Haraka/releases/tag/v3.0.5
 [3.0.6]: https://github.com/haraka/Haraka/releases/tag/v3.0.6
-
 [2.8.0]: https://github.com/haraka/Haraka/releases/tag/v2.8.0
 [2.8.1]: https://github.com/haraka/Haraka/releases/tag/v2.8.1
 [2.8.3]: https://github.com/haraka/Haraka/releases/tag/v2.8.3
@@ -1674,12 +1694,10 @@ config files.
 [2.8.26]: https://github.com/haraka/Haraka/releases/tag/2.8.26
 [2.8.27]: https://github.com/haraka/Haraka/releases/tag/2.8.27
 [2.8.28]: https://github.com/haraka/Haraka/releases/tag/2.8.28
-
 [2.7.3]: https://github.com/haraka/Haraka/releases/tag/v2.7.3
 [2.7.2]: https://github.com/haraka/Haraka/releases/tag/v2.7.2
 [2.7.1]: https://github.com/haraka/Haraka/releases/tag/v2.7.1
 [2.7.0]: https://github.com/haraka/Haraka/releases/tag/v2.7.0
-
 [2.6.0]: https://github.com/haraka/Haraka/releases/tag/v2.6.0
 [2.6.1]: https://github.com/haraka/Haraka/releases/tag/v2.6.1
 [2.5.0]: https://github.com/haraka/Haraka/releases/tag/v2.5.0
@@ -1702,12 +1720,10 @@ config files.
 [2.1.4]: https://github.com/haraka/Haraka/releases/tag/v2.1.4
 [2.1.5]: https://github.com/haraka/Haraka/releases/tag/v2.1.5
 [2.1.6]: https://github.com/haraka/Haraka/releases/tag/v2.1.6
-
 [2.0.0]: https://github.com/haraka/Haraka/releases/tag/v2.0.0
 [2.0.3]: https://github.com/haraka/Haraka/releases/tag/v2.0.3
 [2.0.4]: https://github.com/haraka/Haraka/releases/tag/v2.0.4
 [2.0.5]: https://github.com/haraka/Haraka/releases/tag/v2.0.5
-
 [1.0.1]: https://github.com/haraka/Haraka/releases/tag/v1.0.1
 [1.0.2]: https://github.com/haraka/Haraka/releases/tag/v1.0.2
 [1.1.0]: https://github.com/haraka/Haraka/releases/tag/v1.1.0
@@ -1718,7 +1734,6 @@ config files.
 [1.3.2]: https://github.com/haraka/Haraka/releases/tag/v1.3.2
 [1.3.3]: https://github.com/haraka/Haraka/releases/tag/v1.3.3
 [1.4.0]: https://github.com/haraka/Haraka/releases/tag/v1.4.0
-
 [0.9.0]: https://github.com/haraka/Haraka/releases/tag/v0.9.0
 [0.8.0]: https://github.com/haraka/Haraka/releases/tag/v0.8.0
 [0.7.2]: https://github.com/haraka/Haraka/releases/tag/v0.7.2
@@ -1742,3 +1757,5 @@ config files.
 [0.2]: https://github.com/haraka/Haraka/releases/tag/v0.2
 [3.1.1]: https://github.com/haraka/Haraka/releases/tag/v3.1.1
 [3.1.0]: https://github.com/haraka/Haraka/releases/tag/v3.1.0
+[3.1.2]: https://github.com/haraka/Haraka/releases/tag/v3.1.2
+[3.1.3]: https://github.com/haraka/Haraka/releases/tag/v3.1.3
